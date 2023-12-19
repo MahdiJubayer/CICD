@@ -12,9 +12,7 @@ jobs:
     - name: Read AWS Policy JSON File
       id: read_file  
       run: |
-        echo 'content<<EOF' >> $GITHUB_ENV
-        cat ./policy.json >> $GITHUB_ENV
-        echo 'EOF' >> $GITHUB_ENV
+        echo "content=$(<./policy.json)" >> $GITHUB_ENV
 
     - name: Run a one-line script
       run: |
