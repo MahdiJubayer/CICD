@@ -9,7 +9,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
       - name: Check if file exists
-        run: test -f app/indexasasdas.html
+        run: test -f app/index.html
   deploy:
     runs-on: ubuntu-latest
     steps:
