@@ -14,6 +14,8 @@ jobs:
             echo "File exists in the app folder."
           else
             echo "File does not exist in the app folder."
+              exit 1
+          fi
         
         
   deploy:
