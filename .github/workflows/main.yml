@@ -3,6 +3,19 @@ name: Deploy to S3
 on: push
 
 jobs:
+  check-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Check if file exists
+        run: |
+          if [ -f app/index.html]; then
+            echo "File exists in the app folder."
+          else
+            echo "File does not exist in the app folder."
+            exit 1  # You may choose to fail the workflow if the file is not found
+          fi
   deploy:
     runs-on: ubuntu-latest
     steps:
