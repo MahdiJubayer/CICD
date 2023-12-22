@@ -26,16 +26,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
       - name: Check if bucket exists
         run: |
-          if aws s3 ls "s3://$S3_BUCKET_NAME" 2>&1 | grep -q 'NoSuchBucket'; then
+          if aws s3 ls "s3://$S3_BUCKET_NAME" 2>&1 | grep -q 'rahmah-test'; then
             echo "Bucket does not exist. Creating..."
             aws s3 mb "s3://$BUCKET_NAME"
           else
             echo "Bucket already exists."
           fi
-
       - name: Set up static hosting
         run: |
           aws s3 sync "s3://$S3_BUCKET_NAME" --delete
