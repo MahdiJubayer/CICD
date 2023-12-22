@@ -47,15 +47,15 @@ jobs:
   deletebuckect:
     runs-on:  ubuntu-latest
     steps:
-      - name: delete s3 buckect 
-        uses: vitorsgomes/s3-rm-action@master
-        with:
-          args: --recursive
-        env:
-          AWS_S3_BUCKET: rahmah-test
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            
+    - name: configure s3 buckect 
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGIUON: ap-southeast-1
+    - name: delete the S3 buckect
+      run: |
+        aws s3 rb s3://rahmah-test --force
         
       
       
