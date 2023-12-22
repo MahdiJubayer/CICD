@@ -16,19 +16,7 @@ jobs:
             echo "File does not exist in the app folder."
               exit 1
           fi
-  createbucket:
-    runs-on: ubuntu-latest
-    steps:
-      - name: create buckect on s3e
-        uses: aitorres/aws-s3-create-bucket@v1.2.0
-        with:
-          bucket-name: 'rahmah-test'
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-southeast-1
-          acl: 'private'
-      
-        
+
   deploy:
     runs-on: ubuntu-latest
     steps:
@@ -43,5 +31,34 @@ jobs:
 
       - name: Deploy static site to S3 bucket
         run: aws s3 sync ./app s3://aws-mahdi-cicd --delete
+        
+  createbucket:
+    runs-on: ubuntu-latest
+    steps:
+      - name: create buckect on s3e
+        uses: aitorres/aws-s3-create-bucket@v1.2.0
+        with:
+          bucket-name: 'rahmah-test'
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-southeast-1
+          acl: 'private'
+
+  deletebuckect:
+    runs-on:  ubuntu-latest
+    steps:
+      - name: delete s3 buckect 
+        uses: vitorsgomes/s3-rm-action@master
+        with:
+          args: --recursive
+        env:
+          AWS_S3_BUCKET: rahmah-test
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            
+        
+      
+      
+        
 
   
