@@ -16,28 +16,17 @@ jobs:
             echo "File does not exist in the app folder."
               exit 1
           fi
-  createOrUpdateBucket:
+  createbucket:
     runs-on: ubuntu-latest
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      S3_BUCKET_NAME: rahmah-test
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Check if bucket exists
-        run: |
-          if aws s3 ls "s3://$S3_BUCKET_NAME" 2>&1 | grep -q 'rahmah-test'; then
-            echo "Bucket does not exist. Creating..."
-            aws s3 mb "s3://$BUCKET_NAME"
-          else
-            echo "Bucket already exists."
-          fi
-      - name: Set up static hosting
-        run: |
-          aws s3 sync "s3://$S3_BUCKET_NAME" --delete
-        
+      - name: create buckect on s3e
+        uses: aitorres/aws-s3-create-bucket@v1.2.0
+        with:
+          bucket-name: 'rahmah-test'
+          aws-access-key-id: $({secrets.AWS_ACCESS_KEY_ID})
+          aws-secret-access-key: $({secrets.AWS_SECRET_ACCESS_KEY})
+          acl: 'private'
+      
         
   deploy:
     runs-on: ubuntu-latest
